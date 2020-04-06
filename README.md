@@ -11,6 +11,8 @@ For example, if we have only access to the number of individuals in hospital (da
 
 The problem and the method is described in the [Synthetic_data](https://github.com/mlelarge/fitting_model_epidemiology/blob/master/Synthetic_data.ipynb) notebook and its application to real data is done in the [Real data](https://github.com/mlelarge/fitting_model_epidemiology/blob/master/Real_data.ipynb)
 
+Here is an html version of [Synthettic data](https://rawcdn.githack.com/mlelarge/fitting_model_epidemiology/370951067f45c183f23a929d7e02bce91e608da0/Synthetic_data.html)
+
 Author: [Marc Lelarge](https://www.di.ens.fr/~lelarge/)
 
 # Disclaimer
