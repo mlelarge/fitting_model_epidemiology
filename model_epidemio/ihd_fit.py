@@ -83,6 +83,23 @@ def trainig(model, init, t, optimizer,criterion,niters,data,all_data = True):
             print(itr,loss.item(),[p.data for p in model.parameters()])
     return best_loss, list(parms_best)
 
+# to be refactored with mask...
+def trainig_hosp(model, init, t, optimizer,criterion,niters,data):
+    best_loss = 1000.
+    parms_best = model.parameters()
+    for itr in range(1, niters + 1):
+        optimizer.zero_grad()
+        pred_y = odeint(model,init, t)
+        loss = criterion(pred_y[:,0,1],data[0])+criterion(pred_y[:,0,2],data[1])
+        loss.backward()
+        optimizer.step()
+        if loss.item() < best_loss:
+            best_loss = loss.item()
+            parms_best = model.parameters()
+        if itr% 10 ==0:
+            print(itr,loss.item(),[p.data for p in model.parameters()])
+    return best_loss, list(parms_best)
+
 def get_best_model(l):
     parms_inf = torch.cat([p.data.unsqueeze(0) for p in l[:-1]],0)
     time_inf = l[-1].data
