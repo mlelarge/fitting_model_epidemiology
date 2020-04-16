@@ -1,3 +1,15 @@
+# The impact of contact tracing: simulation study
+
+I am puzzled by the fact that the current debate around a possible tracking app is focusing on the privacy issue instead of its relevance for containing the virus. We are ready to give our geolocation data to avoid a traffic jam but not to save lives!
+
+There are quite a few limitations to the current proposals for contact tracing as it is very well explained by Ross Anderson in [Contact Tracing in the Real World](https://www.lightbluetouchpaper.org/2020/04/12/contact-tracing-in-the-real-world/). But technology will probably play a crucial role if it is shown to be efficient and if public trust it.
+
+Here I try to explain the impact of contact tracing on a simple model through simulations. 
+
+Here is an html version [Impact_tracing_simulation](https://rawcdn.githack.com/mlelarge/fitting_model_epidemiology/fa14de87f96d45332efaf79805ec80cd4c326e44/Impact_tracing_simulation.html)
+
+Code is available here: [Impact_tracing_simulation](https://github.com/mlelarge/fitting_model_epidemiology/blob/master/Impact_tracing_simulation.ipynb)
+
 # Estimating models in epidemiology with optimization
 
 This repo describes a method to find parameters for a SIR like model from a partial view of the trajectory (i.e. with hidden variables).
