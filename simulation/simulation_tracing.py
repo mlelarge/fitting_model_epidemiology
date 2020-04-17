@@ -6,6 +6,7 @@ p_init = 0.05  #fraction of infected people at the beginning of the simulation
 r_cont = 3  #radius of transmission in pixels (0-100)
 p_cont = 0.6  #probability of transmission
 p_heal = 0.8 #propa recovering not used!
+p_contact = 1 #fraction with tracing app
 end_time_low = 90   #low time taken to recover in number of frames (0-infinity)
 end_time_high = 110   #high time taken to recover in number of frames (0-infinity)
 detec_time_low = 20 #low time taken to see symptoms
@@ -16,7 +17,7 @@ time_protected = 50 # time in isolation when signal (number of frames)
 class Simu:
     def __init__(self, n, n_time, p_init = p_init,
             p_cont=p_cont, p_heal=p_heal, r_cont=r_cont,
-            delta_time =  delta_time,
+            delta_time =  delta_time, p_contact= p_contact,
             end_time_low=end_time_low, end_time_high = end_time_high, 
             detec_time_low = detec_time_low, detec_time_high = detec_time_high, time_protected=time_protected):
         self.n = n # number of individuals
@@ -24,6 +25,7 @@ class Simu:
         self.p_init = p_init
         self.p_cont = p_cont
         self.p_heal = p_heal
+        self.p_contact = p_contact
         self.r_cont = r_cont
         self.time_protected = time_protected
         self.delta_time = delta_time
@@ -37,8 +39,8 @@ class Simu:
         self.tensor_contact = np.zeros((self.n,self.n,self.n_time))
         self.tensor_contact[:,:,0] = self.make_contact_matrix(0)
         
-    def init_pop_param(self, n_param = 5):
-        # detection_time, end_time, rec/dead, speed, init_infected
+    def init_pop_param(self, n_param = 6):
+        # detection_time, end_time, rec/dead, speed, init_infected, contact tracing
         self.n_param = n_param
         self.pop_param = np.zeros((self.n,self.n_param))
         self.pop_param[:,0] = np.random.randint(self.detec_time_low,self.detec_time_high+1,self.n)
@@ -46,6 +48,7 @@ class Simu:
         self.pop_param[:,2] = np.random.choice([0,1],size=self.n,p=[self.p_heal,1-self.p_heal])
         self.pop_param[:,3] = np.ones(self.n)*0.5
         self.pop_param[:,4] = np.random.choice([0,1],size = self.n , p = [1-self.p_init, self.p_init] )
+        self.pop_param[:,5] = np.random.choice([0,1],size = self.n , p = [1-self.p_contact, self.p_contact] )
 
     def init_pop(self, n_dyn=11):
         # S, I, Sy, L, posx, posy, destx, desty, infec_time, protected, protec_time
@@ -69,7 +72,7 @@ class Simu:
         t_init = max(0,t-self.delta_time)
         mat_contact = np.sum(self.tensor_contact[:,:,t_init:t],axis=2)-self.delta_time*np.eye(self.n,self.n)
         symptoms = np.sum(self.pop_dyn[:,t_init:t,2],axis=1)*(1-self.pop_dyn[:,t_init,2])
-        contact = mat_contact.dot(symptoms)*(1-self.pop_dyn[:,t,9])
+        contact = mat_contact.dot(symptoms*(self.pop_param[:,5]))*(1-self.pop_dyn[:,t,9])*(self.pop_param[:,5])
         return [i for (i,c) in enumerate(contact) if c>0]
 
     def make_contact_matrix(self,t):

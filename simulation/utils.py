@@ -1,8 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.animation as animation
-from simulation.simulation_tracing import Simu
-
 
 def get_color(l):
     if l[0] and l[9]:
