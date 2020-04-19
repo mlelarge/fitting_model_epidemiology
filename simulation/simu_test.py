@@ -3,7 +3,7 @@ import numpy as np
 
 all_time_test = np.arange(10,80,5)
 n_time_test = len(all_time_test)
-n_simu = 50
+n_simu = 100
 n = 1000
 n_time = 300
 
@@ -45,5 +45,5 @@ for j,time_test in enumerate(all_time_test):
 
 data = [all_infected, all_susceptible, all_symptoms, all_recovered, all_p_infected, all_p_susceptible, all_p_symptoms, all_p_recovered]
 
-np.savez('data_test.npz', *data)
+np.savez('data100_test.npz', *data)
     
