@@ -1,12 +1,12 @@
 # The impact of contact tracing: simulation study
 
-I am puzzled by the fact that the current debate around a possible tracking app is focusing on the privacy issue instead of its relevance for containing the virus. We are ready to give our geolocation data to avoid a traffic jam but not to save lives!
+I am puzzled by the fact that the current debate around a possible tracking app is focusing on the privacy issue instead of its relevance for containing the virus. If we are ready to give our geolocation data to avoid a traffic jam, I think we would do the same to save lives...
 
 There are quite a few limitations to the current proposals for contact tracing as it is very well explained by Ross Anderson in [Contact Tracing in the Real World](https://www.lightbluetouchpaper.org/2020/04/12/contact-tracing-in-the-real-world/). But technology will probably play a crucial role if it is shown to be efficient and if public trust it.
 
-Here I try to explain the impact of contact tracing on a simple model through simulations. 
+Here I try to explain the impact of contact tracing on a simple model through simulations and compare it to a testing startegy.
 
-Here is an html version of the study [Impact_tracing_simulation](https://rawcdn.githack.com/mlelarge/fitting_model_epidemiology/b2ecb32383169e888ea9e7bdf64785b1846d465a/Impact_tracing_simulation.html)
+Here is an html version of the study [Impact_tracing_simulation](https://rawcdn.githack.com/mlelarge/fitting_model_epidemiology/5b9245879d85351af2e0bd671ba49d6aa64d4005/Impact_tracing_simulation.html)
 
 Code is available here: [Impact_tracing_simulation](https://github.com/mlelarge/fitting_model_epidemiology/blob/master/Impact_tracing_simulation.ipynb)
 
