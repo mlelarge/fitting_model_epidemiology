@@ -3,7 +3,7 @@ import numpy as np
 
 all_time_test = np.arange(10,80,5)
 n_time_test = len(all_time_test)
-n_simu = 100
+n_simu = 150
 n = 1000
 n_time = 300
 
