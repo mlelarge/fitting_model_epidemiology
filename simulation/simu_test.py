@@ -1,14 +1,14 @@
 from simulation_tracing import Simu
 import numpy as np
 
-all_p_contact = np.arange(0,1.1,0.1)
-n_p_contact = len(all_p_contact)
-n_simu = 150
+all_time_test = np.arange(10,80,5)
+n_time_test = len(all_time_test)
+n_simu = 50
 n = 1000
 n_time = 300
 
-def make_one_simu(p_contact):
-    simu = Simu(n=n, n_time=n_time,p_contact=p_contact)
+def make_one_simu(time_test):
+    simu = Simu(n=n, n_time=n_time,p_contact=0,time_test=time_test)
     simu.make_simu()
     infected = simu.all_infected()
     susceptible = simu.all_susceptible()
@@ -20,20 +20,20 @@ def make_one_simu(p_contact):
     p_recovered = simu.all_protected_last()
     return infected, susceptible, symptoms, recovered, p_infected, p_susceptible, p_symptoms, p_recovered
 
-all_infected = np.zeros((n_simu,n_p_contact,n_time))
-all_susceptible = np.zeros((n_simu,n_p_contact,n_time))
-all_symptoms = np.zeros((n_simu,n_p_contact,n_time))
-all_recovered = np.zeros((n_simu,n_p_contact,n_time))
-all_p_infected = np.zeros((n_simu,n_p_contact,n_time))
-all_p_susceptible = np.zeros((n_simu,n_p_contact,n_time))
-all_p_symptoms = np.zeros((n_simu,n_p_contact,n_time))
-all_p_recovered = np.zeros((n_simu,n_p_contact,n_time))
+all_infected = np.zeros((n_simu,n_time_test,n_time))
+all_susceptible = np.zeros((n_simu,n_time_test,n_time))
+all_symptoms = np.zeros((n_simu,n_time_test,n_time))
+all_recovered = np.zeros((n_simu,n_time_test,n_time))
+all_p_infected = np.zeros((n_simu,n_time_test,n_time))
+all_p_susceptible = np.zeros((n_simu,n_time_test,n_time))
+all_p_symptoms = np.zeros((n_simu,n_time_test,n_time))
+all_p_recovered = np.zeros((n_simu,n_time_test,n_time))
 
-for j,p_contact in enumerate(all_p_contact):
-    print('start simu for p_contact', p_contact)
+for j,time_test in enumerate(all_time_test):
+    print('start simu for time test', time_test)
     for i in range(n_simu):
         print('start simu', i)
-        infected, susceptible, symptoms, recovered, p_infected, p_susceptible, p_symptoms, p_recovered = make_one_simu(p_contact)
+        infected, susceptible, symptoms, recovered, p_infected, p_susceptible, p_symptoms, p_recovered = make_one_simu(time_test)
         all_infected[i,j,:] = infected
         all_susceptible[i,j,:] = susceptible
         all_symptoms[i,j,:] = symptoms
@@ -45,5 +45,5 @@ for j,p_contact in enumerate(all_p_contact):
 
 data = [all_infected, all_susceptible, all_symptoms, all_recovered, all_p_infected, all_p_susceptible, all_p_symptoms, all_p_recovered]
 
-np.savez('data.npz', *data)
+np.savez('data_test.npz', *data)
     

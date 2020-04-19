@@ -6,6 +6,7 @@ p_init = 0.05  #fraction of infected people at the beginning of the simulation
 r_cont = 3  #radius of transmission in pixels (0-100)
 p_cont = 0.6  #probability of transmission
 p_heal = 0.8 #propa recovering not used!
+time_test = 50 #time between 2 tests
 p_contact = 1 #fraction with tracing app
 end_time_low = 90   #low time taken to recover in number of frames (0-infinity)
 end_time_high = 110   #high time taken to recover in number of frames (0-infinity)
@@ -19,7 +20,7 @@ class Simu:
             p_cont=p_cont, p_heal=p_heal, r_cont=r_cont,
             delta_time =  delta_time, p_contact= p_contact,
             end_time_low=end_time_low, end_time_high = end_time_high, 
-            detec_time_low = detec_time_low, detec_time_high = detec_time_high, time_protected=time_protected):
+            detec_time_low = detec_time_low, detec_time_high = detec_time_high, time_protected=time_protected, time_test=time_test):
         self.n = n # number of individuals
         self.n_time = n_time # number of times in simulation
         self.p_init = p_init
@@ -28,6 +29,9 @@ class Simu:
         self.p_contact = p_contact
         self.r_cont = r_cont
         self.time_protected = time_protected
+        self.time_test = time_test
+        self.indices = [(int(k*self.n/self.time_test), int((k+1)*self.n/self.time_test) ) for k in range(self.time_test)]
+        self.n_indices = len(self.indices)
         self.delta_time = delta_time
         self.end_time_low = end_time_low
         self.end_time_high = end_time_high
@@ -113,7 +117,6 @@ class Simu:
                 self.pop_dyn[i,t+1,8] = self.pop_param[i,0]
 
     def make_2P(self,t):
-        #self.pop_dyn[:,t+1,9] = self.pop_dyn[:,t,9]
         for i in self.get_signal(t):
             self.pop_dyn[i,t+1,9] = 1
             if self.pop_dyn[i,t,10] < 0:
@@ -150,6 +153,15 @@ class Simu:
                 #print(t, 'symptom', i)
                 self.pop_dyn[i,t+1,1:3] = [0,1]
                 self.pop_dyn[i,t+1,8] = self.pop_param[i,1]
+
+    def make_test(self,t):
+        indice_test = range(self.indices[t%self.n_indices][0], self.indices[t%self.n_indices][1])
+        #print(indice_test)
+        positive_test = set(indice_test).intersection(set(self.get_infected(t)))
+        for i in positive_test:
+            self.pop_dyn[i,t+1,9] = 1
+            if self.pop_dyn[i,t,10] < 0:
+                self.pop_dyn[i,t+1,10] = self.time_protected
     
     def check_P(self,t):
         # check for P(t) if transition to NotP(t+1)
@@ -184,6 +196,16 @@ class Simu:
             self.make_2P(t)
             self.make_S2I(t)
             self.make_step_mvt(t)
+
+    def make_simu_test(self):
+        for t in range(self.n_time-1):
+            self.check_I(t)
+            self.check_Sy(t)
+            self.check_P(t)
+            self.make_test(t)
+            self.make_S2I(t)
+            self.make_step_mvt(t)
+
             
     def all_infected(self):
         return np.sum(self.pop_dyn[:,:,1],axis=0)/self.n
