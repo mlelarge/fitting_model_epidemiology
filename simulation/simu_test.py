@@ -9,7 +9,7 @@ n_time = 300
 
 def make_one_simu(time_test):
     simu = Simu(n=n, n_time=n_time,p_contact=0,time_test=time_test)
-    simu.make_simu()
+    simu.make_simu_test()
     infected = simu.all_infected()
     susceptible = simu.all_susceptible()
     symptoms = simu.all_symptoms()
