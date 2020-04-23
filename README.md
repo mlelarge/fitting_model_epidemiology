@@ -6,7 +6,7 @@ There are quite a few limitations to the current proposals for contact tracing a
 
 Here I try to explain the impact of contact tracing on a simple model through simulations and compare it to a testing startegy.
 
-Here is an html version of the study [Impact_tracing_simulation](https://rawcdn.githack.com/mlelarge/fitting_model_epidemiology/4992b6160cca81926a1796f6f7873dea37d8d0de/Impact_tracing_simulation.html)
+Here is an LinkedIn article version of the study [Impact_tracing_simulation](https://www.linkedin.com/pulse/impact-contact-tracing-simulation-study-marc-lelarge/)
 
 Code is available here: [Impact_tracing_simulation](https://github.com/mlelarge/fitting_model_epidemiology/blob/master/Impact_tracing_simulation.ipynb)
 
